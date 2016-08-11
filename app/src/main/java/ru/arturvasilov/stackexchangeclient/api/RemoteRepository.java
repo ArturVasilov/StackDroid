@@ -88,9 +88,7 @@ public class RemoteRepository {
                 })
                 .toList()
                 .flatMap(questions -> {
-                    SQLite.get().delete(QuestionTable.TABLE, Where.create()
-                            .where(QuestionTable.TAG + "=?")
-                            .whereArgs(new String[]{tag}));
+                    SQLite.get().delete(QuestionTable.TABLE, Where.create().equalTo(QuestionTable.TAG, tag));
                     SQLite.get().insert(QuestionTable.TABLE, questions);
                     return Observable.just(questions);
                 })
@@ -135,12 +133,12 @@ public class RemoteRepository {
                 .compose(ErrorsHandler.handleErrors())
                 .map(AnswerResponse::getAnswers)
                 .flatMap(answers -> {
-                    SQLite.get().delete(AnswerTable.TABLE, Where.create());
+                    SQLite.get().delete(AnswerTable.TABLE);
                     SQLite.get().insert(AnswerTable.TABLE, answers);
                     return Observable.just(answers);
                 })
                 .onErrorResumeNext(throwable -> {
-                    List<Answer> answers = SQLite.get().query(AnswerTable.TABLE, Where.create());
+                    List<Answer> answers = SQLite.get().query(AnswerTable.TABLE);
                     if (answers.isEmpty()) {
                         return Observable.error(throwable);
                     }
@@ -175,7 +173,7 @@ public class RemoteRepository {
                 .filter(notification -> !TextUtils.isEmpty(notification.getBody()))
                 .toList()
                 .flatMap(notifications -> {
-                    SQLite.get().delete(NotificationTable.TABLE, Where.create());
+                    SQLite.get().delete(NotificationTable.TABLE);
                     SQLite.get().insert(NotificationTable.TABLE, notifications);
                     return Observable.just(notifications);
                 });

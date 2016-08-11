@@ -2,8 +2,9 @@ package ru.arturvasilov.stackexchangeclient.data.database;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
+
+import org.sqlite.database.sqlite.SQLiteDatabase;
 
 import ru.arturvasilov.sqlite.core.BaseTable;
 import ru.arturvasilov.sqlite.core.Table;
@@ -30,10 +31,10 @@ public class UserTable extends BaseTable<User> {
                 .primaryKey(USER_ID)
                 .intColumn(USER_ID)
                 .intColumn(AGE)
-                .stringColumn(NAME)
+                .textColumn(NAME)
                 .intColumn(REPUTATION)
-                .stringColumn(LINK)
-                .stringColumn(PROFILE_IMAGE)
+                .textColumn(LINK)
+                .textColumn(PROFILE_IMAGE)
                 .execute(database);
     }
 

@@ -2,8 +2,9 @@ package ru.arturvasilov.stackexchangeclient.data.database;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
+
+import org.sqlite.database.sqlite.SQLiteDatabase;
 
 import ru.arturvasilov.sqlite.core.BaseTable;
 import ru.arturvasilov.sqlite.core.Table;
@@ -33,14 +34,14 @@ public class QuestionTable extends BaseTable<Question> {
     public void onCreate(@NonNull SQLiteDatabase database) {
         TableBuilder.create(this)
                 .intColumn(QUESTION_ID)
-                .stringColumn(TITLE)
-                .stringColumn(LINK)
-                .stringColumn(OWNER)
+                .textColumn(TITLE)
+                .textColumn(LINK)
+                .textColumn(OWNER)
                 .intColumn(IS_ANSWERED)
                 .intColumn(VIEW_COUNT)
                 .intColumn(ANSWER_COUNT)
-                .stringColumn(CREATION_DATE)
-                .stringColumn(TAG)
+                .textColumn(CREATION_DATE)
+                .textColumn(TAG)
                 .primaryKey(QUESTION_ID, TAG)
                 .execute(database);
     }

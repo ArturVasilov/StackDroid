@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Locale;
 
 import ru.arturvasilov.sqlite.core.SQLite;
-import ru.arturvasilov.sqlite.core.Where;
 import ru.arturvasilov.stackexchangeclient.R;
 import ru.arturvasilov.stackexchangeclient.data.database.NotificationTable;
 import ru.arturvasilov.stackexchangeclient.data.database.UserTable;
@@ -40,7 +39,7 @@ public class NotificationsRemoteViewService extends RemoteViewsService {
 
         public NotificationsViewFactory() {
             mNotifications = new ArrayList<>();
-            User currentUser = SQLite.get().queryObject(UserTable.TABLE, Where.create());
+            User currentUser = SQLite.get().querySingle(UserTable.TABLE);
             mItemClickListenerIntent = new Intent(Intent.ACTION_VIEW);
             if (currentUser != null) {
                 mItemClickListenerIntent.setData(Uri.parse(currentUser.getLink()));
@@ -57,7 +56,7 @@ public class NotificationsRemoteViewService extends RemoteViewsService {
             final long identityToken = Binder.clearCallingIdentity();
 
             mNotifications.clear();
-            List<Notification> notifications = SQLite.get().query(NotificationTable.TABLE, Where.create());
+            List<Notification> notifications = SQLite.get().query(NotificationTable.TABLE);
             mNotifications.addAll(notifications);
 
             Binder.restoreCallingIdentity(identityToken);

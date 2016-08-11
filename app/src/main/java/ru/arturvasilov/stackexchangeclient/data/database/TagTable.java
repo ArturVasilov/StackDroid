@@ -2,8 +2,9 @@ package ru.arturvasilov.stackexchangeclient.data.database;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
+
+import org.sqlite.database.sqlite.SQLiteDatabase;
 
 import ru.arturvasilov.sqlite.core.BaseTable;
 import ru.arturvasilov.sqlite.core.Table;
@@ -21,7 +22,7 @@ public class TagTable extends BaseTable<String> {
     @Override
     public void onCreate(@NonNull SQLiteDatabase database) {
         TableBuilder.create(this)
-                .stringColumn(TAG)
+                .textColumn(TAG)
                 .primaryKey(TAG)
                 .execute(database);
     }

@@ -30,31 +30,24 @@ public class LocalRepository {
                 .take(1)
                 .filter(id -> id > 0)
                 .map(String::valueOf)
-                .flatMap(id -> RxSQLite.get().queryObject(UserTable.TABLE, Where.create()
-                        .where(UserTable.USER_ID + "=?")
-                        .whereArgs(new String[]{id})))
+                .flatMap(id -> RxSQLite.get().querySingle(UserTable.TABLE, Where.create().equalTo(UserTable.USER_ID, id)))
                 .compose(RxSchedulers.async());
     }
 
     @NonNull
     public Observable<List<Question>> questions(@NonNull String tag) {
-        return RxSQLite.get().query(QuestionTable.TABLE, Where.create()
-                .where(QuestionTable.TAG + "=?")
-                .whereArgs(new String[]{tag}))
+        return RxSQLite.get().query(QuestionTable.TABLE, Where.create().equalTo(QuestionTable.TAG, tag))
                 .compose(RxSchedulers.async());
     }
 
     @NonNull
     public Observable<List<String>> tags() {
-        return RxSQLite.get().query(TagTable.TABLE, Where.create())
-                .compose(RxSchedulers.async());
+        return RxSQLite.get().query(TagTable.TABLE, Where.create()).compose(RxSchedulers.async());
     }
 
     public boolean updateTag(@NonNull Tag tag) {
         if (tag.isFavourite()) {
-            SQLite.get().delete(TagTable.TABLE, Where.create()
-                    .where(TagTable.TAG + "=?")
-                    .whereArgs(new String[]{tag.getName()}));
+            SQLite.get().delete(TagTable.TABLE, Where.create().equalTo(TagTable.TAG, tag.getName()));
             Analytics.buildEvent()
                     .putString(EventKeys.TAG, tag.getName())
                     .log(EventTags.TAGS_REMOVE_FAVOURITE);
@@ -71,10 +64,10 @@ public class LocalRepository {
     public void logout() {
         Observable.just(true)
                 .flatMap(value -> {
-                    SQLite.get().delete(UserTable.TABLE, Where.create());
-                    SQLite.get().delete(QuestionTable.TABLE, Where.create());
-                    SQLite.get().delete(TagTable.TABLE, Where.create());
-                    SQLite.get().delete(AnswerTable.TABLE, Where.create());
+                    SQLite.get().delete(UserTable.TABLE);
+                    SQLite.get().delete(QuestionTable.TABLE);
+                    SQLite.get().delete(TagTable.TABLE);
+                    SQLite.get().delete(AnswerTable.TABLE);
                     return Observable.just(value);
                 })
                 .subscribeOn(Schedulers.io())

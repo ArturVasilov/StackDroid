@@ -2,8 +2,9 @@ package ru.arturvasilov.stackexchangeclient.data.database;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
+
+import org.sqlite.database.sqlite.SQLiteDatabase;
 
 import ru.arturvasilov.sqlite.core.BaseTable;
 import ru.arturvasilov.sqlite.core.Table;
@@ -28,8 +29,8 @@ public class AnswerTable extends BaseTable<Answer> {
     @Override
     public void onCreate(@NonNull SQLiteDatabase database) {
         TableBuilder.create(this)
-                .stringColumn(OWNER)
-                .stringColumn(BODY)
+                .textColumn(OWNER)
+                .textColumn(BODY)
                 .intColumn(IS_ACCEPTED)
                 .intColumn(QUESTION_ID)
                 .intColumn(ANSWER_ID)

@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import ru.arturvasilov.sqlite.core.SQLiteConfig;
 import ru.arturvasilov.sqlite.core.SQLiteContentProvider;
-import ru.arturvasilov.sqlite.core.Schema;
+import ru.arturvasilov.sqlite.core.SQLiteSchema;
 
 /**
  * @author Artur Vasilov
@@ -21,7 +21,7 @@ public class SQLiteProvider extends SQLiteContentProvider {
     }
 
     @Override
-    protected void prepareSchema(@NonNull Schema schema) {
+    protected void prepareSchema(@NonNull SQLiteSchema schema) {
         schema.register(UserTable.TABLE);
         schema.register(QuestionTable.TABLE);
         schema.register(AnswerTable.TABLE);

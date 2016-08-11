@@ -2,8 +2,9 @@ package ru.arturvasilov.stackexchangeclient.data.database;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
+
+import org.sqlite.database.sqlite.SQLiteDatabase;
 
 import ru.arturvasilov.sqlite.core.BaseTable;
 import ru.arturvasilov.sqlite.core.Table;
@@ -25,8 +26,8 @@ public class NotificationTable extends BaseTable<Notification> {
     public void onCreate(@NonNull SQLiteDatabase database) {
         TableBuilder.create(this)
                 .intColumn(IS_UNREAD)
-                .stringColumn(CREATION_DATE)
-                .stringColumn(BODY)
+                .textColumn(CREATION_DATE)
+                .textColumn(BODY)
                 .execute(database);
     }
 
