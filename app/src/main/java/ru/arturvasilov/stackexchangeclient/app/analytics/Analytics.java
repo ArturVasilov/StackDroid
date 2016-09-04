@@ -60,12 +60,12 @@ public class Analytics {
         }
 
         @NonNull
-        public EventBuilder putString(@NonNull @EventKey String key, @NonNull String value) {
+        public EventBuilder putString(@NonNull String key, @NonNull String value) {
             mBundle.putString(key, value);
             return this;
         }
 
-        public void log(@NonNull @EventTag String eventTag) {
+        public void log(@NonNull String eventTag) {
             sAnalytics.logEvent(eventTag, mBundle);
         }
 
