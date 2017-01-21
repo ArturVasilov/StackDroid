@@ -4,7 +4,7 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.1'
+        classpath 'com.android.tools.build:gradle:2.3.0-beta2'
         classpath 'me.tatarka:gradle-retrolambda:3.3.0-beta4'
         classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
         classpath 'io.fabric.tools:gradle:1.21.7'
@@ -22,16 +22,28 @@ allprojects {
     }
 }
 
-File paramsFile = new File("D:\\Android\\projects\\Stackdroid\\build_params.txt")
 def params = []
-paramsFile.eachLine {
-    params.add(it)
+try {
+    File paramsFile = new File("D:\\Android\\projects\\Stackdroid\\build_params.txt")
+    paramsFile.eachLine {
+        params.add(it)
+    }
+} catch (IOException ignored) {
+    params.add('""')
+    params.add('""')
+    System.out.println('ERROR! Add your own client id and secret key for stackoverflow app')
 }
 
-File buildFile = new File("D:\\Android\\projects\\Stackdroid\\build_release.txt")
 def buildKeys = []
-buildFile.eachLine {
-    buildKeys.add(it)
+try {
+    File buildFile = new File("D:\\Android\\projects\\Stackdroid\\build_release.txt")
+    buildFile.eachLine {
+        buildKeys.add(it)
+    }
+} catch (IOException ignored) {
+    1.upto(4, {
+        buildKeys.add("stub")
+    })
 }
 
 ext {
