@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="ru.arturvasilov.stackexchangeclient"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="ru.arturvasilov.stackexchangeclient">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -47,7 +47,19 @@
 
         <activity android:name=".activity.AnswersListActivity"/>
 
-        <activity android:name=".activity.QuestionActivity"/>
+        <activity android:name=".activity.QuestionActivity">
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="stackoverflow.com"
+                    android:pathPrefix="/questions"
+                    android:scheme="http"/>
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".activity.TagsActivity"
@@ -67,6 +79,15 @@
             tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".service.AppIndexingService"
+            android:exported="true"
+            android:permission="com.google.android.gms.permission.APPINDEXING">
+            <intent-filter>
+                <action android:name="com.google.firebase.appindexing.UPDATE_INDEX"/>
             </intent-filter>
         </service>
 

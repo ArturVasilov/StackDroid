@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import com.google.firebase.appindexing.FirebaseAppIndex;
+
 import ru.arturvasilov.stackexchangeclient.AppDelegate;
 import ru.arturvasilov.stackexchangeclient.activity.AuthActivity;
 import ru.arturvasilov.stackexchangeclient.api.RepositoryProvider;
@@ -28,6 +30,7 @@ public final class Env {
         RepositoryProvider.provideRemoteRepository().logout(accessToken);
         RepositoryProvider.provideLocalRepository().logout();
         RepositoryProvider.provideKeyValueStorage().logout();
+        FirebaseAppIndex.getInstance().removeAll();
 
         Context context = AppDelegate.getAppContext();
         Intent intent = new Intent(context, AuthActivity.class);
